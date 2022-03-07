@@ -16,15 +16,10 @@
 		<!-- Building -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>8</java.version>
-		<project.mainclass>com.ubivashka.plasmovoice.PlasmoVoiceAddon
-		</project.mainclass>
 
 		<!-- Dependencies -->
-		<spigot.api.version>1.16.4-R0.1-SNAPSHOT</spigot.api.version>
-		<jna.version>4.4.0</jna.version>
-		<plasmovoice.api.version>1.0.9</plasmovoice.api.version>
-		<java.mp3.version>1.0.4</java.mp3.version>
-		<jlayer.decoder.version>1.0.1.4</jlayer.decoder.version>
+		<lamp.common.version>2.9.5</lamp.common.version>
+		<vk.java.sdk.version>1.0.14</vk.java.sdk.version>
 
 		<!-- Maven plugins -->
 		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -44,15 +39,14 @@
 		<dependency>
 			<groupId>com.github.Revxrsal.Lamp</groupId>
 			<artifactId>common</artifactId>
-			<version>2.9.5</version>
-			<scope>runtime</scope>
+			<version>${lamp.common.version}</version>
 		</dependency>
 
 		<!-- VK Java SDK -->
 		<dependency>
 			<groupId>com.vk.api</groupId>
 			<artifactId>sdk</artifactId>
-			<version>1.0.14</version>
+			<version>${vk.java.sdk.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -84,11 +78,6 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>${project.mainclass}</mainClass>
-						</manifest>
-					</archive>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
