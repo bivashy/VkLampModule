@@ -17,7 +17,7 @@ import com.vk.api.sdk.objects.messages.ConversationPeerType;
 import revxrsal.commands.core.BaseCommandHandler;
 
 public class VkHandler extends BaseCommandHandler implements VkCommandHandler {
-	private static final List<VkHandler> INSTANCES = Collections.unmodifiableList(new ArrayList<>());
+	private static final List<VkHandler> INSTANCES = Collections.synchronizedList(new ArrayList<>());
 	private final VkApiClient vkApiClient;
 	private final GroupActor groupActor;
 
@@ -57,7 +57,7 @@ public class VkHandler extends BaseCommandHandler implements VkCommandHandler {
 	}
 
 	public static List<VkHandler> getInstances() {
-		return INSTANCES;
+		return Collections.unmodifiableList(INSTANCES);
 	}
 
 }
