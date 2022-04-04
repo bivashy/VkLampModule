@@ -13,6 +13,8 @@ import com.vk.api.sdk.objects.messages.ConversationPeerType;
 import com.vk.api.sdk.objects.messages.Message;
 import com.vk.api.sdk.objects.users.UserFull;
 
+import revxrsal.commands.CommandHandler;
+
 public class BaseVkActor implements VkActor {
 	private final Supplier<UUID> uuid = MemoizingSupplier.memoize(() -> new UUID(0, getAuthorId()));
 	private final VkCommandHandler commandHandler;
@@ -125,6 +127,9 @@ public class BaseVkActor implements VkActor {
 		return message.getPeerId();
 	}
 
-//
+	@Override
+	public CommandHandler getCommandHandler() {
+		return commandHandler;
+	}
 
 }
