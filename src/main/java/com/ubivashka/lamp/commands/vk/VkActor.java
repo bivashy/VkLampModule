@@ -1,9 +1,9 @@
 package com.ubivashka.lamp.commands.vk;
 
 import com.ubivashka.lamp.commands.vk.core.BaseVkActor;
+import com.ubivashka.lamp.commands.vk.message.DispatchSource;
 import com.vk.api.sdk.objects.messages.Conversation;
 import com.vk.api.sdk.objects.messages.ConversationPeerType;
-import com.vk.api.sdk.objects.messages.Message;
 import com.vk.api.sdk.objects.users.UserFull;
 
 import revxrsal.commands.command.CommandActor;
@@ -15,11 +15,11 @@ import revxrsal.commands.command.CommandActor;
 public interface VkActor extends CommandActor {
 
 	/**
-	 * Returns the message of the actor
+	 * Returns the source of the dispatch
 	 *
-	 * @return The actor`s sent message
+	 * @return The actor`s sent dispatch object
 	 */
-	Message getMessage();
+	DispatchSource getDispatchSource();
 
 	/**
 	 * Returns the user from the message <br>
@@ -36,7 +36,7 @@ public interface VkActor extends CommandActor {
 	 * @return Message conversation
 	 */
 	Conversation getConversation();
-
+	
 	/**
 	 * Returns conversation type of message {@link ConversationPeerType}
 	 *
@@ -45,49 +45,49 @@ public interface VkActor extends CommandActor {
 	ConversationPeerType getConversationType();
 
 	/**
-	 * Returns text of message
+	 * Returns text of dispatch source
 	 *
-	 * @return Message text
+	 * @return Dispatch source text
 	 */
-	String getMessageText();
+	String getText();
 
 	/**
-	 * Returns payload of message
+	 * Returns payload of dispatch source
 	 *
-	 * @return Message payload
+	 * @return Dispatch source payload
 	 */
 	String getMessagePayload();
 
 	/**
 	 * Returns unique auto-incremented number for all messages with this peer
 	 *
-	 * @return Message conversation id
+	 * @return Dispatch source conversation id
 	 */
-	Integer getConversationMessageId();
+	Integer getConversationId();
 
 	/**
 	 * Returns message author id that can be passed to the method
 	 * {@link com.vk.api.sdk.client.VkApiClient#users()}
 	 *
-	 * @return Message author id
+	 * @return Author that dispatched
 	 */
 	Integer getAuthorId();
 
 	/**
-	 * Returns message peed id that represents conversation id
+	 * Returns source peer id that represents conversation id
 	 *
-	 * @return Message peer id
+	 * @return Source peer id
 	 */
 	Integer getPeerId();
 
 	/**
-	 * Wraps message, and command handler to the {@link VkActor}
+	 * Wraps dispatch source, and command handler to the {@link VkActor}
 	 *
 	 * @param message
 	 * @param vkCommandHandler
 	 * @return {@link VkActor} that wrapped parameters
 	 */
-	static VkActor wrap(Message message, VkCommandHandler vkCommandHandler) {
-		return new BaseVkActor(message, vkCommandHandler);
+	static VkActor wrap(DispatchSource dispatchSource, VkCommandHandler vkCommandHandler) {
+		return new BaseVkActor(dispatchSource, vkCommandHandler);
 	}
 }

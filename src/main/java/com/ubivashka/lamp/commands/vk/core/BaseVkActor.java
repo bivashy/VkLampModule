@@ -6,11 +6,11 @@ import java.util.function.Supplier;
 
 import com.ubivashka.lamp.commands.vk.VkActor;
 import com.ubivashka.lamp.commands.vk.VkCommandHandler;
+import com.ubivashka.lamp.commands.vk.message.DispatchSource;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.messages.Conversation;
 import com.vk.api.sdk.objects.messages.ConversationPeerType;
-import com.vk.api.sdk.objects.messages.Message;
 import com.vk.api.sdk.objects.users.UserFull;
 
 import revxrsal.commands.CommandHandler;
@@ -18,14 +18,14 @@ import revxrsal.commands.CommandHandler;
 public class BaseVkActor implements VkActor {
 	private final Supplier<UUID> uuid = MemoizingSupplier.memoize(() -> new UUID(0, getAuthorId()));
 	private final VkCommandHandler commandHandler;
-	private final Message message;
+	private final DispatchSource dispatchSource;
 
 	private final Supplier<UserFull> user;
 
 	private final Supplier<Conversation> conversation;
 
-	public BaseVkActor(Message message, VkCommandHandler commandHandler) {
-		this.message = message;
+	public BaseVkActor(DispatchSource dispatchSource, VkCommandHandler commandHandler) {
+		this.dispatchSource = dispatchSource;
 		this.commandHandler = commandHandler;
 
 		user = MemoizingSupplier.memoize(() -> {
@@ -42,8 +42,8 @@ public class BaseVkActor implements VkActor {
 		conversation = MemoizingSupplier.memoize(() -> {
 			try {
 				return commandHandler.getClient().messages()
-						.getConversationsById(commandHandler.getActor(), message.getPeerId()).execute().getItems()
-						.get(0);
+						.getConversationsById(commandHandler.getActor(), dispatchSource.getPeerId()).execute()
+						.getItems().get(0);
 			} catch (ApiException | ClientException e) {
 				e.printStackTrace();
 				return null;
@@ -54,12 +54,17 @@ public class BaseVkActor implements VkActor {
 
 	@Override
 	public String getName() {
-		return getUser().getFirstName();
+		return String.valueOf(dispatchSource.getAuthorId());
 	}
 
 	@Override
 	public UUID getUniqueId() {
 		return uuid.get();
+	}
+
+	@Override
+	public DispatchSource getDispatchSource() {
+		return dispatchSource;
 	}
 
 	@Override
@@ -83,8 +88,8 @@ public class BaseVkActor implements VkActor {
 	}
 
 	@Override
-	public Message getMessage() {
-		return message;
+	public ConversationPeerType getConversationType() {
+		return getConversation().getPeer().getType();
 	}
 
 	@Override
@@ -98,38 +103,32 @@ public class BaseVkActor implements VkActor {
 	}
 
 	@Override
-	public ConversationPeerType getConversationType() {
-		return getConversation().getPeer().getType();
-	}
-
-	@Override
-	public String getMessageText() {
-		return message.getText();
+	public String getText() {
+		return dispatchSource.getText();
 	}
 
 	@Override
 	public String getMessagePayload() {
-		return message.getPayload();
+		return dispatchSource.getPayload();
 	}
 
 	@Override
-	public Integer getConversationMessageId() {
-		return message.getConversationMessageId();
+	public Integer getConversationId() {
+		return dispatchSource.getConversationId();
 	}
 
 	@Override
 	public Integer getAuthorId() {
-		return message.getFromId();
+		return dispatchSource.getAuthorId();
 	}
 
 	@Override
 	public Integer getPeerId() {
-		return message.getPeerId();
+		return dispatchSource.getPeerId();
 	}
 
 	@Override
 	public CommandHandler getCommandHandler() {
 		return commandHandler;
 	}
-
 }

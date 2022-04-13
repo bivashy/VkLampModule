@@ -1,8 +1,8 @@
 package com.ubivashka.lamp.commands.vk.core;
 
 import com.ubivashka.lamp.commands.vk.VkActor;
+import com.ubivashka.lamp.commands.vk.message.DispatchSource;
 import com.vk.api.sdk.objects.messages.Conversation;
-import com.vk.api.sdk.objects.messages.Message;
 import com.vk.api.sdk.objects.users.UserFull;
 
 import revxrsal.commands.command.CommandActor;
@@ -18,7 +18,7 @@ public class VkSenderResolver implements SenderResolver {
 	@Override
 	public boolean isCustomType(Class<?> type) {
 		return UserFull.class.isAssignableFrom(type) || Conversation.class.isAssignableFrom(type)
-				|| Message.class.isAssignableFrom(type);
+				|| DispatchSource.class.isAssignableFrom(type);
 	}
 
 	@Override
@@ -28,8 +28,8 @@ public class VkSenderResolver implements SenderResolver {
 			return vkActor.getUser();
 		if (Conversation.class.isAssignableFrom(customSenderType))
 			return vkActor.getConversation();
-		if (Message.class.isAssignableFrom(customSenderType))
-			return vkActor.getMessage();
+		if (DispatchSource.class.isAssignableFrom(customSenderType))
+			return vkActor.getDispatchSource();
 		return vkActor;
 	}
 
