@@ -18,7 +18,7 @@
 		<java.version>8</java.version>
 
 		<!-- Dependencies -->
-		<lamp.common.version>3.0.2</lamp.common.version>
+		<lamp.common.version>3.0.4</lamp.common.version>
 		<vk.java.sdk.version>1.0.14</vk.java.sdk.version>
 
 		<!-- Maven plugins -->

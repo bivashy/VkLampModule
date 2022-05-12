@@ -2,7 +2,7 @@ package com.ubivashka.lamp.commands.vk.message;
 
 import com.vk.api.sdk.objects.messages.Message;
 
-public class MessageDispatchSource implements DispatchSource{
+public class MessageDispatchSource implements DispatchSource {
 	private final Message message;
 
 	public MessageDispatchSource(Message message) {
