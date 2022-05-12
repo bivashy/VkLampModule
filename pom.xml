@@ -5,7 +5,7 @@
 	<groupId>com.ubivashka.lamp</groupId>
 	<artifactId>vk-module</artifactId>
 	<name>VKLampModule</name>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<properties>
 
 		<!-- Manifest -->
