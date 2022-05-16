@@ -33,4 +33,13 @@ public class ButtonDispatchSource implements DispatchSource {
 	public Integer getPeerId() {
 		return callbackButton.getPeerID();
 	}
+	
+	@Override
+	public Integer getSourceId() {
+		return 0;
+	}
+	
+	public CallbackButton getCallbackButton() {
+		return callbackButton;
+	}
 }

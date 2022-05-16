@@ -19,6 +19,8 @@ public interface DispatchSource {
 
 	Integer getPeerId();
 	
+	Integer getSourceId();
+	
 	default ArgumentStack getArgumentStack(CommandHandler commandHandler) {
 		return commandHandler.parseArguments(getText());
 	}

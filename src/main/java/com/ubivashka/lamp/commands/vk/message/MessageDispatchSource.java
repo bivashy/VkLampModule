@@ -33,4 +33,13 @@ public class MessageDispatchSource implements DispatchSource {
 	public Integer getPeerId() {
 		return message.getPeerId();
 	}
+
+	@Override
+	public Integer getSourceId() {
+		return message.getId();
+	}
+
+	public Message getMessage() {
+		return message;
+	}
 }
