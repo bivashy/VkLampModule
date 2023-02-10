@@ -1,5 +1,2 @@
-/target/
-/.project
-/.settings
-/target
-/.classpath
+# IntellijIDEA folders
+.idea/
