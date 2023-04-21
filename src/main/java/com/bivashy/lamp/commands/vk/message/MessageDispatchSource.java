@@ -1,4 +1,4 @@
-package com.ubivashka.lamp.commands.vk.message;
+package com.bivashy.lamp.commands.vk.message;
 
 import com.vk.api.sdk.objects.messages.Message;
 

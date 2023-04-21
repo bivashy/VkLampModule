@@ -1,4 +1,4 @@
-package com.ubivashka.lamp.commands.vk.message;
+package com.bivashy.lamp.commands.vk.message;
 
 /**
  * Represents dispatch source that can be as message or callback button with

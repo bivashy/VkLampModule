@@ -1,4 +1,4 @@
-package com.ubivashka.lamp.commands.vk.annotations;
+package com.bivashy.lamp.commands.vk.annotations;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -6,7 +6,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import com.ubivashka.lamp.commands.vk.exceptions.InvalidConversationType;
+import com.bivashy.lamp.commands.vk.exceptions.InvalidConversationType;
 import com.vk.api.sdk.objects.messages.ConversationPeerType;
 
 import revxrsal.commands.annotation.DistributeOnMethods;

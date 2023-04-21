@@ -1,4 +1,4 @@
-package com.ubivashka.lamp.commands.vk.exceptions;
+package com.bivashy.lamp.commands.vk.exceptions;
 
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.exception.DefaultExceptionHandler;

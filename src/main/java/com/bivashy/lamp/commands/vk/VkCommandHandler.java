@@ -1,6 +1,6 @@
-package com.ubivashka.lamp.commands.vk;
+package com.bivashy.lamp.commands.vk;
 
-import com.ubivashka.lamp.commands.vk.api.actor.VkApiActor;
+import com.bivashy.lamp.commands.vk.api.actor.VkApiActor;
 import com.vk.api.sdk.client.VkApiClient;
 
 import revxrsal.commands.CommandHandler;

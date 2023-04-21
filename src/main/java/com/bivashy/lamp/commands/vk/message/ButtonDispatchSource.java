@@ -1,6 +1,6 @@
-package com.ubivashka.lamp.commands.vk.message;
+package com.bivashy.lamp.commands.vk.message;
 
-import com.ubivashka.lamp.commands.vk.objects.CallbackButton;
+import com.bivashy.lamp.commands.vk.objects.CallbackButton;
 
 public class ButtonDispatchSource implements DispatchSource {
 	private final CallbackButton callbackButton;

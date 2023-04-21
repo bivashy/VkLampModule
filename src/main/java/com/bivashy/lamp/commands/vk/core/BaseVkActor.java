@@ -1,12 +1,12 @@
-package com.ubivashka.lamp.commands.vk.core;
+package com.bivashy.lamp.commands.vk.core;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
-import com.ubivashka.lamp.commands.vk.VkActor;
-import com.ubivashka.lamp.commands.vk.VkCommandHandler;
-import com.ubivashka.lamp.commands.vk.message.DispatchSource;
+import com.bivashy.lamp.commands.vk.VkActor;
+import com.bivashy.lamp.commands.vk.VkCommandHandler;
+import com.bivashy.lamp.commands.vk.message.DispatchSource;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.messages.Conversation;

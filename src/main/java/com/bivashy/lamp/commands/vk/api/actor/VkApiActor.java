@@ -1,4 +1,4 @@
-package com.ubivashka.lamp.commands.vk.api.actor;
+package com.bivashy.lamp.commands.vk.api.actor;
 
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.Actor;

@@ -1,16 +1,16 @@
-package com.ubivashka.lamp.commands.vk.core;
+package com.bivashy.lamp.commands.vk.core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.ubivashka.lamp.commands.vk.VkActor;
-import com.ubivashka.lamp.commands.vk.VkCommandHandler;
-import com.ubivashka.lamp.commands.vk.annotations.ConversationType;
-import com.ubivashka.lamp.commands.vk.api.actor.VkApiActor;
-import com.ubivashka.lamp.commands.vk.exceptions.InvalidConversationType;
-import com.ubivashka.lamp.commands.vk.exceptions.VkExceptionAdapter;
+import com.bivashy.lamp.commands.vk.VkActor;
+import com.bivashy.lamp.commands.vk.annotations.ConversationType;
+import com.bivashy.lamp.commands.vk.exceptions.InvalidConversationType;
+import com.bivashy.lamp.commands.vk.exceptions.VkExceptionAdapter;
+import com.bivashy.lamp.commands.vk.VkCommandHandler;
+import com.bivashy.lamp.commands.vk.api.actor.VkApiActor;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.Actor;
 import com.vk.api.sdk.client.actors.GroupActor;

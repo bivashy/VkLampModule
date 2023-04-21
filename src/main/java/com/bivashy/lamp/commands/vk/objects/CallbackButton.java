@@ -1,4 +1,4 @@
-package com.ubivashka.lamp.commands.vk.objects;
+package com.bivashy.lamp.commands.vk.objects;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.ubivashka.lamp.commands.vk.core;
+package com.bivashy.lamp.commands.vk.core;
 
 import static revxrsal.commands.util.Preconditions.notNull;
 

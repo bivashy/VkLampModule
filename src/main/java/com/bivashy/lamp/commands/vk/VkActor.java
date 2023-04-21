@@ -1,7 +1,7 @@
-package com.ubivashka.lamp.commands.vk;
+package com.bivashy.lamp.commands.vk;
 
-import com.ubivashka.lamp.commands.vk.core.BaseVkActor;
-import com.ubivashka.lamp.commands.vk.message.DispatchSource;
+import com.bivashy.lamp.commands.vk.core.BaseVkActor;
+import com.bivashy.lamp.commands.vk.message.DispatchSource;
 import com.vk.api.sdk.objects.messages.Conversation;
 import com.vk.api.sdk.objects.messages.ConversationPeerType;
 import com.vk.api.sdk.objects.users.UserFull;
