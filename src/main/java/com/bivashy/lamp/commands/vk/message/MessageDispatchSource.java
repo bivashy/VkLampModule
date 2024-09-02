@@ -1,6 +1,7 @@
 package com.bivashy.lamp.commands.vk.message;
 
 import api.longpoll.bots.model.events.messages.MessageNew;
+import com.google.gson.JsonElement;
 
 public class MessageDispatchSource implements DispatchSource {
 
@@ -17,7 +18,12 @@ public class MessageDispatchSource implements DispatchSource {
 
     @Override
     public String getPayload() {
-        return messageNewEvent.getMessage().getPayload().toString();
+        return getRawPayload();
+    }
+
+    private String getRawPayload() {
+        JsonElement element = messageNewEvent.getMessage().getPayload();
+        return element.isJsonPrimitive() ? element.getAsString() : element.toString();
     }
 
     @Override
