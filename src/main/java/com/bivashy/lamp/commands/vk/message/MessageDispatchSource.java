@@ -1,45 +1,38 @@
 package com.bivashy.lamp.commands.vk.message;
 
-import com.vk.api.sdk.objects.messages.Message;
+import api.longpoll.bots.model.events.messages.MessageNew;
 
 public class MessageDispatchSource implements DispatchSource {
-	private final Message message;
 
-	public MessageDispatchSource(Message message) {
-		this.message = message;
-	}
+    private final MessageNew messageNewEvent;
 
-	@Override
-	public String getText() {
-		return message.getText();
-	}
+    public MessageDispatchSource(MessageNew messageNewEvent) {
+        this.messageNewEvent = messageNewEvent;
+    }
 
-	@Override
-	public String getPayload() {
-		return message.getPayload();
-	}
+    @Override
+    public String getText() {
+        return messageNewEvent.getMessage().getText();
+    }
 
-	@Override
-	public Integer getConversationId() {
-		return message.getConversationMessageId();
-	}
+    @Override
+    public String getPayload() {
+        return messageNewEvent.getMessage().getPayload().toString();
+    }
 
-	@Override
-	public Integer getAuthorId() {
-		return message.getFromId();
-	}
+    @Override
+    public Integer getConversationId() {
+        return messageNewEvent.getMessage().getConversationMessageId();
+    }
 
-	@Override
-	public Integer getPeerId() {
-		return message.getPeerId();
-	}
+    @Override
+    public Integer getAuthorId() {
+        return messageNewEvent.getMessage().getFromId();
+    }
 
-	@Override
-	public Integer getSourceId() {
-		return message.getId();
-	}
+    @Override
+    public Integer getPeerId() {
+        return messageNewEvent.getMessage().getPeerId();
+    }
 
-	public Message getMessage() {
-		return message;
-	}
 }

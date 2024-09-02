@@ -16,8 +16,6 @@ public interface DispatchSource {
 
 	Integer getPeerId();
 	
-	Integer getSourceId();
-	
 	default <T extends DispatchSource> T as(Class<T> clazz) {
 		return clazz.cast(this);
 	}

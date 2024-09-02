@@ -4,24 +4,20 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
+import api.longpoll.bots.exceptions.VkApiException;
+import api.longpoll.bots.model.objects.basic.Conversation;
+import api.longpoll.bots.model.objects.basic.User;
 import com.bivashy.lamp.commands.vk.VkActor;
 import com.bivashy.lamp.commands.vk.VkCommandHandler;
 import com.bivashy.lamp.commands.vk.message.DispatchSource;
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
-import com.vk.api.sdk.objects.messages.Conversation;
-import com.vk.api.sdk.objects.messages.ConversationPeerType;
-import com.vk.api.sdk.objects.users.UserFull;
-
 import revxrsal.commands.CommandHandler;
 
 public class BaseVkActor implements VkActor {
+
     private final Supplier<UUID> uuid = MemoizingSupplier.memoize(() -> new UUID(0, getAuthorId()));
     private final VkCommandHandler commandHandler;
     private final DispatchSource dispatchSource;
-
-    private final Supplier<UserFull> user;
-
+    private final Supplier<User> user;
     private final Supplier<Conversation> conversation;
 
     public BaseVkActor(DispatchSource dispatchSource, VkCommandHandler commandHandler) {
@@ -30,25 +26,24 @@ public class BaseVkActor implements VkActor {
 
         user = MemoizingSupplier.memoize(() -> {
             try {
-                return commandHandler.getActor().usersGet(commandHandler.getClient())
-                        .userIds(String.valueOf(getAuthorId())).execute().get(0);
-            } catch(ApiException | ClientException e) {
-                commandHandler.getExceptionHandler().handleException(e, this);
+                return commandHandler.vk().users.get().setUserIds(Integer.toString(getAuthorId())).execute().getResponse().get(0);
+            } catch (VkApiException e) {
+                // TODO: Actual exception handling
+                e.printStackTrace();
                 return null;
             }
-
         });
 
         conversation = MemoizingSupplier.memoize(() -> {
             try {
-                return commandHandler.getActor().conversationById(commandHandler.getClient(), dispatchSource.getPeerId()).execute()
-                        .getItems().get(0);
-            } catch(ApiException | ClientException e) {
-                commandHandler.getExceptionHandler().handleException(e, this);
+                return commandHandler.vk().messages.getConversationsById().setPeerIds(dispatchSource.getPeerId()).execute().getResponse().getItems().get(0);
+            } catch (VkApiException e) {
+                // TODO: Actual exception handling
+                e.printStackTrace();
                 return null;
             }
-
         });
+        commandHandler.registerSenderResolver(VkSenderResolver.INSTANCE);
     }
 
     @Override
@@ -68,31 +63,21 @@ public class BaseVkActor implements VkActor {
 
     @Override
     public void reply(String message) {
-        try {
-            commandHandler.getActor().sendMessage(commandHandler.getClient())
-                    .randomId(ThreadLocalRandom.current().nextInt()).peerId(getPeerId()).message(message).execute();
-        } catch(ApiException | ClientException e) {
-            commandHandler.getExceptionHandler().handleException(e, this);
-        }
+        commandHandler.vk().messages.send().setRandomId(ThreadLocalRandom.current().nextInt()).setPeerId(getPeerId()).setMessage(message).executeAsync();
     }
 
     @Override
     public void error(String message) {
-        try {
-            commandHandler.getActor().sendMessage(commandHandler.getClient())
-                    .randomId(ThreadLocalRandom.current().nextInt()).peerId(getPeerId()).message(message).execute();
-        } catch(ApiException | ClientException e) {
-            commandHandler.getExceptionHandler().handleException(e, this);
-        }
+        reply(message);
     }
 
     @Override
-    public ConversationPeerType getConversationType() {
-        return getConversation().getPeer().getType();
+    public Conversation.Peer getConversationType() {
+        return getConversation().getPeer();
     }
 
     @Override
-    public UserFull getUser() {
+    public User getUser() {
         return user.get();
     }
 
@@ -130,4 +115,5 @@ public class BaseVkActor implements VkActor {
     public CommandHandler getCommandHandler() {
         return commandHandler;
     }
+
 }

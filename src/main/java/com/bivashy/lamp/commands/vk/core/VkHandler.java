@@ -5,49 +5,42 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import api.longpoll.bots.VkBot;
+import api.longpoll.bots.methods.VkBotsMethods;
 import com.bivashy.lamp.commands.vk.VkActor;
+import com.bivashy.lamp.commands.vk.VkCommandHandler;
 import com.bivashy.lamp.commands.vk.annotations.ConversationType;
 import com.bivashy.lamp.commands.vk.exceptions.InvalidConversationType;
 import com.bivashy.lamp.commands.vk.exceptions.VkExceptionAdapter;
-import com.bivashy.lamp.commands.vk.VkCommandHandler;
-import com.bivashy.lamp.commands.vk.api.actor.VkApiActor;
-import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.client.actors.Actor;
-import com.vk.api.sdk.client.actors.GroupActor;
-import com.vk.api.sdk.objects.messages.ConversationPeerType;
-
 import revxrsal.commands.core.BaseCommandHandler;
 
 public class VkHandler extends BaseCommandHandler implements VkCommandHandler {
+
+    // TODO: Remove that redundant list
     private static final List<VkHandler> INSTANCES = Collections.synchronizedList(new ArrayList<>());
-    private final VkApiClient vkApiClient;
-    private final VkApiActor apiActor;
+    private final VkBot bot;
+    private final VkBotsMethods methods;
 
-    @Deprecated
-    public VkHandler(VkApiClient vkApiClient, GroupActor groupActor) {
-        this(vkApiClient, VkApiActor.of(groupActor));
-    }
-
-    public VkHandler(VkApiClient vkApiClient, VkApiActor apiActor) {
+    public VkHandler(VkBot bot) {
         super();
-        this.vkApiClient = vkApiClient;
-        this.apiActor = apiActor;
+        this.bot = bot;
+        this.methods = new VkBotsMethods(this.bot::getAccessToken);
 
         registerCondition((actor, command, arguments) -> {
             if (!command.hasAnnotation(ConversationType.class))
                 return;
 
-            ConversationPeerType[] allowedConversationTypes = command.getAnnotation(ConversationType.class)
+            String[] allowedConversationTypes = command.getAnnotation(ConversationType.class)
                     .conversationTypes();
 
+            String conversationType = actor.as(VkActor.class).getConversationType().getType();
             if (Arrays.stream(allowedConversationTypes)
-                    .noneMatch(peerType -> peerType == actor.as(VkActor.class).getConversationType()))
+                    .noneMatch(peerType -> peerType.equals(conversationType)))
                 throw new InvalidConversationType(command);
         });
 
-        registerDependency(VkApiClient.class, vkApiClient);
-        registerDependency(VkApiActor.class, apiActor);
-        registerDependency(Actor.class, apiActor.getActor());
+        registerDependency(VkBot.class, this.bot);
+        registerDependency(VkBotsMethods.class, this.methods);
 
         setExceptionHandler(VkExceptionAdapter.INSTANCE);
 
@@ -55,13 +48,13 @@ public class VkHandler extends BaseCommandHandler implements VkCommandHandler {
     }
 
     @Override
-    public VkApiClient getClient() {
-        return vkApiClient;
+    public VkBot getClient() {
+        return bot;
     }
 
     @Override
-    public VkApiActor getActor() {
-        return apiActor;
+    public VkBotsMethods vk() {
+        return methods;
     }
 
     public static List<VkHandler> getInstances() {

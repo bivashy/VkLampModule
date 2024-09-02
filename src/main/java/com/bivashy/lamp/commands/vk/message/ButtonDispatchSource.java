@@ -1,45 +1,38 @@
 package com.bivashy.lamp.commands.vk.message;
 
-import com.bivashy.lamp.commands.vk.objects.CallbackButton;
+import api.longpoll.bots.model.events.messages.MessageEvent;
 
 public class ButtonDispatchSource implements DispatchSource {
-	private final CallbackButton callbackButton;
 
-	public ButtonDispatchSource(CallbackButton callbackButton) {
-		this.callbackButton = callbackButton;
-	}
+    private final MessageEvent messageEvent;
 
-	@Override
-	public String getText() {
-		return callbackButton.getPayload();
-	}
+    public ButtonDispatchSource(MessageEvent messageEvent) {
+        this.messageEvent = messageEvent;
+    }
 
-	@Override
-	public String getPayload() {
-		return callbackButton.getPayload();
-	}
+    @Override
+    public String getText() {
+        return messageEvent.getPayload().toString();
+    }
 
-	@Override
-	public Integer getConversationId() {
-		return callbackButton.getConversationMessageID();
-	}
+    @Override
+    public String getPayload() {
+        return messageEvent.toString();
+    }
 
-	@Override
-	public Integer getAuthorId() {
-		return callbackButton.getUserID();
-	}
+    @Override
+    public Integer getConversationId() {
+        return Integer.parseInt(messageEvent.getConversationMessageId());
+    }
 
-	@Override
-	public Integer getPeerId() {
-		return callbackButton.getPeerID();
-	}
-	
-	@Override
-	public Integer getSourceId() {
-		return 0;
-	}
-	
-	public CallbackButton getCallbackButton() {
-		return callbackButton;
-	}
+    @Override
+    public Integer getAuthorId() {
+        return messageEvent.getUserId();
+    }
+
+    @Override
+    public Integer getPeerId() {
+        return messageEvent.getPeerId();
+    }
+
 }

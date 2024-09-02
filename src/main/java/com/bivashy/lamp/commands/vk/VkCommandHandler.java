@@ -1,22 +1,21 @@
 package com.bivashy.lamp.commands.vk;
 
-import com.bivashy.lamp.commands.vk.api.actor.VkApiActor;
-import com.vk.api.sdk.client.VkApiClient;
-
+import api.longpoll.bots.VkBot;
+import api.longpoll.bots.methods.VkBotsMethods;
 import revxrsal.commands.CommandHandler;
 
 public interface VkCommandHandler extends CommandHandler {
+
     /**
-     * Returns {@link VkApiClient} that handles message events
+     * Returns {@link VkBot} that handles message events
      *
      * @return vk client
      */
-    VkApiClient getClient();
+    VkBot getClient();
 
     /**
-     * Returns vk api actor that implements methods for query creating by actor
-     *
-     * @return vk api actor
+     * Returns {@link VkBotsMethods} which allows to send API requests
      */
-    VkApiActor getActor();
+    VkBotsMethods vk();
+
 }

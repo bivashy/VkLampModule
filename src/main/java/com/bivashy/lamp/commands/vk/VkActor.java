@@ -1,10 +1,9 @@
 package com.bivashy.lamp.commands.vk;
 
+import api.longpoll.bots.model.objects.basic.Conversation;
+import api.longpoll.bots.model.objects.basic.User;
 import com.bivashy.lamp.commands.vk.core.BaseVkActor;
 import com.bivashy.lamp.commands.vk.message.DispatchSource;
-import com.vk.api.sdk.objects.messages.Conversation;
-import com.vk.api.sdk.objects.messages.ConversationPeerType;
-import com.vk.api.sdk.objects.users.UserFull;
 
 import revxrsal.commands.command.CommandActor;
 
@@ -27,7 +26,7 @@ public interface VkActor extends CommandActor {
 	 *
 	 * @return Actor as Vk user
 	 */
-	UserFull getUser();
+	User getUser();
 
 	/**
 	 * Returns conversation of the message <br>
@@ -38,11 +37,11 @@ public interface VkActor extends CommandActor {
 	Conversation getConversation();
 	
 	/**
-	 * Returns conversation type of message {@link ConversationPeerType}
+	 * Returns conversation type of message {@link Conversation.Peer}
 	 *
 	 * @return Message conversation type
 	 */
-	ConversationPeerType getConversationType();
+	Conversation.Peer getConversationType();
 
 	/**
 	 * Returns text of dispatch source
@@ -66,8 +65,7 @@ public interface VkActor extends CommandActor {
 	Integer getConversationId();
 
 	/**
-	 * Returns message author id that can be passed to the method
-	 * {@link com.vk.api.sdk.client.VkApiClient#users()}
+	 * Returns message author id that can be passed to the vk methods
 	 *
 	 * @return Author that dispatched
 	 */
@@ -83,8 +81,8 @@ public interface VkActor extends CommandActor {
 	/**
 	 * Wraps dispatch source, and command handler to the {@link VkActor}
 	 *
-	 * @param message
-	 * @param vkCommandHandler
+	 * @param dispatchSource Source of the message
+	 * @param vkCommandHandler Command Handler
 	 * @return {@link VkActor} that wrapped parameters
 	 */
 	static VkActor wrap(DispatchSource dispatchSource, VkCommandHandler vkCommandHandler) {
